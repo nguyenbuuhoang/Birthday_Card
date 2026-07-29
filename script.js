@@ -201,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   function openEnvelope() {
     if (envelopeOpened || opening) return;
+    if (!playing && !musicManuallyPaused) startBackgroundMusic();
     envelopeOpened = true;
     $(".envelope").classList.add("open");
     $("#openCard").setAttribute("aria-label", "Chạm vào thiệp trắng để mở tấm thiệp");
@@ -561,6 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const bgMusic = document.getElementById("bgMusic");
   bgMusic.volume = 0.75;
   let playing = false;
+  let musicManuallyPaused = false;
 
   // audioContext chỉ dùng cho SFX ngắn (blow, chime, flip)
   let audioContext = null;
@@ -643,30 +645,40 @@ document.addEventListener("DOMContentLoaded", () => {
   async function startBackgroundMusic() {
     try {
       await bgMusic.play();
-      playing = true;
-      updateMusicButton();
       return true;
     } catch (e) {
+      playing = false;
+      updateMusicButton();
       return false;
     }
   }
+
+  bgMusic.addEventListener("play", () => {
+    playing = true;
+    updateMusicButton();
+  });
+
+  bgMusic.addEventListener("pause", () => {
+    playing = false;
+    updateMusicButton();
+  });
 
   // Cố gắng phát ngay khi mở thiệp; nếu trình duyệt chặn autoplay,
   // lần chạm đầu tiên vào trang sẽ phát nhạc tự động.
   startBackgroundMusic();
   document.addEventListener("pointerdown", () => {
-    if (!playing) startBackgroundMusic();
-  }, { once: true });
+    if (!playing && !musicManuallyPaused) startBackgroundMusic();
+  });
 
   // soundButton: bật/tắt nhạc nền MP3
   $("#soundButton").addEventListener("click", async () => {
     if (!playing) {
+      musicManuallyPaused = false;
       ensureAudioContext();
       await startBackgroundMusic();
     } else {
+      musicManuallyPaused = true;
       bgMusic.pause();
-      playing = false;
-      updateMusicButton();
     }
   });
 
