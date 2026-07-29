@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#190d18">
+  <title>💌</title>
+  <meta name="description" content="Một tấm thiệp sinh nhật và lời nhắn đặc biệt dành riêng cho em.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=DM+Serif+Display:ital@0;1&family=Meow+Script&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <main class="scene">
+    <section class="intro" id="intro" aria-labelledby="introTitle">
+      <p class="kicker" data-card-date>30 · 07 · 2026</p>
+      <h1 id="introTitle">Có một tấm thiệp<br><em>dành riêng cho em.</em></h1>
+      <button class="envelope" id="openCard" aria-label="Mở tấm thiệp">
+        <span class="letter-peek">
+          <b id="introRecipient">Gửi em, người đặc biệt ♡</b>
+          <small>Mừng ngày cô gái anh yêu đến với thế giới</small>
+          <span class="girl-feature" aria-label="Vân Anh, sinh ngày 30 tháng 07 năm 2001">
+            <img src="assets/beyeuva.png" alt="Biểu tượng dễ thương dành cho em">
+          </span>
+          <i>✦</i>
+        </span>
+        <span class="envelope-back"></span>
+        <span class="envelope-left"></span>
+        <span class="envelope-right"></span>
+        <span class="envelope-bottom"></span>
+        <span class="envelope-flap"></span>
+        <span class="wax-seal" id="waxSeal" aria-label="Dấu mộc Vân Anh">V.A</span>
+      </button>
+      <button class="open-label" id="openCardLabel">Chạm để mở thiệp <span>→</span></button>
+    </section>
+
+    <section class="card-view" id="cardView" hidden aria-label="Thiệp sinh nhật">
+      <div class="card-shell">
+        <header class="card-header">
+          <span class="card-date" data-card-date>30 · 07 · 2026</span>
+          <div class="page-dots" id="pageDots" aria-label="Tiến trình thiệp"></div>
+          <button class="sound-button" id="soundButton" aria-pressed="false" aria-label="Bật nhạc">
+            <i></i><i></i><i></i><span>Nhạc</span>
+          </button>
+        </header>
+
+        <div class="pages" id="pages">
+          <article class="page active" data-page="0">
+            <div class="paper page-birthday">
+              <div class="corner-flower">❀</div>
+              <h2>Chúc mừng<br><em>Sinh nhật, bé <span id="birthdayName">Vân Anh</span>.</em></h2>
+              <div class="cake" id="birthdayCake" role="button" tabindex="0" aria-label="Thổi nến sinh nhật">
+                <span class="flame"></span><span class="candle"></span>
+                <span class="cake-top"></span><span class="cake-body"></span>
+              </div>
+              <p class="blow-instruction" id="blowInstruction">Chạm vào ngọn nến để thổi tắt và ước nhé ♡</p>
+              <p class="body-copy">Chúc em một tuổi mới có thật nhiều niềm vui, đủ bình yên cho những ngày mệt mỏi và
+                luôn giữ được nụ cười mà anh rất thích.</p>
+              <p class="hand-note">Hôm nay, em chỉ cần hạnh phúc thôi nhé ♡</p>
+            </div>
+          </article>
+
+          <article class="page" data-page="1" hidden>
+            <div class="paper page-birthday-wish">
+              <span class="wish-flower wish-flower-left">❀</span>
+              <span class="wish-flower wish-flower-right">❀</span>
+              <div class="birthday-writing">
+                <div class="birthday-wish-copy" id="birthdayCopy" aria-live="polite"></div>
+                <span class="birthday-pen" id="birthdayPen" aria-hidden="true">✒</span>
+              </div>
+              <div class="birthday-writing-status">
+                <span id="birthdayWritingStatus">Anh đang viết lời chúc...</span>
+                <button id="finishBirthdayWriting">Viết nhanh</button>
+              </div>
+              <div class="birthday-promise">
+                <span>Điều anh mong nhất</span>
+                <strong>Là năm nay, em sẽ hạnh phúc hơn năm trước thật nhiều.</strong>
+              </div>
+              <p class="birthday-sign">Chúc mừng sinh nhật, người anh yêu ♡</p>
+            </div>
+          </article>
+
+          <article class="page" data-page="3" hidden>
+            <div class="paper page-memories page-lock-gate">
+              <div class="lock-state memory-lock" id="lockState">
+                <p class="kicker ink">TRANG 03 · NỘI DUNG ĐƯỢC KHÓA</p>
+                <button class="locked-letter-card" id="memorySeal" aria-label="Chạm để mở khóa các trang tiếp theo">
+                  <span class="locked-paper">
+                    <small>CHỈ DÀNH CHO EM</small>
+                    <strong>Phần còn lại của tấm thiệp</strong>
+                    <i data-card-date>30 · 07 · 2026</i>
+                  </span>
+                  <span class="locked-envelope-back"></span>
+                  <span class="locked-envelope-front"></span>
+                  <span class="lock-medallion"><b>🔒</b><em>Chạm để mở</em></span>
+                </button>
+                <div class="memory-password-panel" id="memoryPasswordPanel" hidden>
+                  <span class="mini-lock">♡</span>
+                  <h2>Mở khóa<br><em>những trang phía sau.</em></h2>
+                  <label for="password">Mật mã 8 chữ số</label>
+                  <div class="password-row">
+                    <input id="password" type="password" inputmode="numeric" maxlength="8" placeholder="DDMMYYYY"
+                      autocomplete="off">
+                    <button id="unlockButton">Mở khóa</button>
+                  </div>
+                  <p class="form-message" id="formMessage" role="status"></p>
+                </div>
+                <div class="unlock-success" id="unlockSuccess" hidden>
+                  <span>🔓</span>
+                  <strong>Đã mở khóa</strong>
+                  <p>Bức thư đang chờ em tự tay mở ra.</p>
+                  <button class="open-secret-letter" id="openSecretLetter">Mở bức thư <i>→</i></button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="page" data-page="4" hidden>
+            <div class="paper page-letter">
+              <p class="kicker ink">BỨC THƯ BÍ MẬT · ĐÃ MỞ KHÓA</p>
+              <div class="letter-state" id="letterState">
+                <p class="salutation">Gửi em...</p>
+                <div class="writing-area">
+                  <div class="letter-copy" id="letterCopy" aria-live="polite"></div>
+                  <span class="writing-pen" id="writingPen" aria-hidden="true">✒</span>
+                </div>
+                <div class="writing-status">
+                  <span id="writingStatus">Đang viết thư...</span>
+                  <button id="finishWriting">Viết nhanh</button>
+                </div>
+                <div class="signature" id="letterSignature"><span>Thương gửi,</span><strong>Anh — người rất thích
+                    em</strong></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="page" data-page="7" hidden>
+            <div class="paper page-love-counter">
+              <p class="kicker ink">HÀNH TRÌNH YÊU THƯƠNG</p>
+              <h2>Chúng mình đã<br><em>bên nhau được...</em></h2>
+              <div class="counter-display">
+                <div class="counter-box animate-pop">
+                  <span id="countDays">00</span>
+                  <label>Ngày</label>
+                </div>
+                <div class="counter-box animate-pop" style="animation-delay: 0.1s;">
+                  <span id="countHours">00</span>
+                  <label>Giờ</label>
+                </div>
+                <div class="counter-box animate-pop" style="animation-delay: 0.2s;">
+                  <span id="countMinutes">00</span>
+                  <label>Phút</label>
+                </div>
+                <div class="counter-box animate-pop" style="animation-delay: 0.3s;">
+                  <span id="countSeconds">00</span>
+                  <label>Giây</label>
+                </div>
+              </div>
+              <p class="love-counter-note">"Mỗi giây phút trôi qua cùng em đều là những khoảnh khắc quý giá nhất đối với
+                anh."</p>
+              <div class="heart-pulse-container">
+                <div class="pulsing-heart">♥</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="page" data-page="5" hidden>
+            <div class="paper page-memories">
+              <div id="memoriesContent">
+                <div class="memories-title">
+                  <div>
+                    <p class="kicker ink">NHỮNG MẢNH KÝ ỨC</p>
+                    <h2>Ba khoảnh khắc<br><em>anh luôn nhớ.</em></h2>
+                  </div>
+                  <p>Chạm vào từng ảnh để lật xem lời nhắn.</p>
+                </div>
+                <div class="photo-strip">
+                  <div class="polaroid-card tilt-left" data-memory="0" role="button" tabindex="0"
+                    aria-label="Kỷ niệm ngày đầu tiên. Chạm để lật">
+                    <div class="polaroid-inner">
+                      <div class="polaroid-front">
+                        <img src="assets/memory1.png" alt="Kỷ niệm ngày đầu tiên">
+                        <span>Ngày đầu tiên</span>
+                      </div>
+                      <div class="polaroid-back">
+                        <span class="memory-index">01</span>
+                        <p class="memory-text">Mọi chuyện bắt đầu rất tình cờ, nhưng khoảnh khắc ấy lại ở trong trí nhớ
+                          anh thật lâu. ♡</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="polaroid-card lift" data-memory="1" role="button" tabindex="0"
+                    aria-label="Kỷ niệm nụ cười. Chạm để lật">
+                    <div class="polaroid-inner">
+                      <div class="polaroid-front">
+                        <img src="assets/memory2.png" alt="Kỷ niệm nụ cười">
+                        <span>Nụ cười anh nhớ</span>
+                      </div>
+                      <div class="polaroid-back">
+                        <span class="memory-index">02</span>
+                        <p class="memory-text">Có những nụ cười chỉ xuất hiện vài giây, nhưng đủ làm một ngày của anh
+                          sáng lên. ♡</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="polaroid-card tilt-right" data-memory="2" role="button" tabindex="0"
+                    aria-label="Một ngày đặc biệt. Chạm để lật">
+                    <div class="polaroid-inner">
+                      <div class="polaroid-front">
+                        <img src="assets/memory3.png" alt="Một ngày đặc biệt">
+                        <span>Ngày bình thường thật đặc biệt</span>
+                      </div>
+                      <div class="polaroid-back">
+                        <span class="memory-index">03</span>
+                        <p class="memory-text">Chẳng cần dịp gì lớn lao. Chỉ cần đúng người, ngày bình thường cũng thành
+                          kỷ niệm. ♡</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="page" data-page="6" hidden>
+            <div class="paper page-confession">
+              <span class="heart-mark">♥</span>
+              <p class="kicker ink">TRANG CUỐI CÙNG</p>
+              <h2>Nếu được, anh muốn<br>cùng em đi qua<br><em>thật nhiều ngày sau nữa.</em></h2>
+              <p>Em đồng ý làm người yêu anh nhé?</p>
+              <div class="answer-buttons">
+                <button class="yes-button" id="yesButton">Em đồng ý ♡</button>
+                <button class="think-button" id="thinkButton">Cho em suy nghĩ</button>
+              </div>
+              <p class="answer-message" id="answerMessage"></p>
+            </div>
+          </article>
+        </div>
+
+        <footer class="card-footer">
+          <button id="prevPage" disabled><span>←</span> Trang trước</button>
+          <button id="nextPage">Trang sau <span>→</span></button>
+        </footer>
+      </div>
+      <button class="close-card" id="closeCard" aria-label="Đóng thiệp">×</button>
+    </section>
+  </main>
+
+  <dialog id="successDialog">
+    <div class="success-content">
+      <div class="big-heart">♥</div>
+      <p class="kicker">VẬY LÀ TỪ HÔM NAY</p>
+      <h2>Anh và em<br><em>có nhau rồi.</em></h2>
+      <p>Cảm ơn em đã bước vào cuộc đời anh.<br>Anh sẽ trân trọng điều này thật nhiều.</p>
+      <span class="date-pill" data-card-date>30 · 07 · 2026</span>
+      <button id="closeSuccess">Đọc lại tấm thiệp</button>
+    </div>
+  </dialog>
+
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <audio id="bgMusic" src="assets/happy_birthday.mp3" loop preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+
+</html>
