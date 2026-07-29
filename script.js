@@ -204,16 +204,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!playing && !musicManuallyPaused) startBackgroundMusic();
     envelopeOpened = true;
     $(".envelope").classList.add("open");
-    $("#openCard").setAttribute("aria-label", "Chạm vào thiệp trắng để mở tấm thiệp");
-    $("#openCardLabel").innerHTML = "Chạm vào thiệp trắng để mở <span>→</span>";
+    $("#openCard").setAttribute("aria-label", "Chạm lần nữa để mở tấm thiệp");
+    $("#openCardLabel").innerHTML = "Chạm lần nữa để mở thiệp <span>→</span>";
     $("#openCardLabel").disabled = true;
   }
-  $("#openCard").addEventListener("click", event => {
+  $("#openCard").addEventListener("click", () => {
     if (!envelopeOpened) {
       openEnvelope();
       return;
     }
-    if (event.target.closest(".letter-peek") || event.detail === 0) openCard();
+    openCard();
   });
   $("#openCardLabel").addEventListener("click", () => {
     if (!envelopeOpened) openEnvelope();
