@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#190d18">
-  <title>💌</title>
+  <title>Thiệp gửi Vân Anh 💌</title>
   <meta name="description" content="Một tấm thiệp sinh nhật và lời nhắn đặc biệt dành riêng cho em.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,15 +55,31 @@
           <article class="page active" data-page="0">
             <div class="paper page-birthday">
               <div class="corner-flower">❀</div>
-              <h2>Chúc mừng<br><em>Sinh nhật, bé <span id="birthdayName">Vân Anh</span>.</em></h2>
+              <h2>Chúc mừng<br><em>Sinh nhật, bé yêu <span id="birthdayName">Vân Anh</span>.</em></h2>
               <div class="cake" id="birthdayCake" role="button" tabindex="0" aria-label="Thổi nến sinh nhật">
                 <span class="flame"></span><span class="candle"></span>
                 <span class="cake-top"></span><span class="cake-body"></span>
               </div>
               <p class="blow-instruction" id="blowInstruction">Chạm vào ngọn nến để thổi tắt và ước nhé ♡</p>
+              <button class="birthday-gift-button" id="openBirthdayGift" hidden>
+                Mở món quà nhỏ dành cho em <span>♡</span>
+              </button>
               <p class="body-copy">Chúc em một tuổi mới có thật nhiều niềm vui, đủ bình yên cho những ngày mệt mỏi và
                 luôn giữ được nụ cười mà anh rất thích.</p>
-              <p class="hand-note">Hôm nay, em chỉ cần hạnh phúc thôi nhé ♡</p>
+              <p class="hand-note">Em chỉ cần hạnh phúc thôi nhé ♡</p>
+              <div class="birthday-gift-reveal" id="birthdayGiftReveal" hidden>
+                <span class="gift-glow" aria-hidden="true"></span>
+                <p class="kicker ink">MÓN QUÀ NHỎ DÀNH CHO EM</p>
+                <figure class="birthday-photo">
+                  <img src="assets/HappyBirthday.jpg" alt="Vân Anh và người yêu bên chiếc bánh sinh nhật">
+                  <figcaption>30 · 07 · 2026</figcaption>
+                </figure>
+                <p class="birthday-photo-message">
+                  Chúc mừng sinh nhật, Vân Anh.<br>
+                  Mong anh vẫn được ngồi cạnh em như thế này trong thật nhiều sinh nhật sau nữa. ♡
+                </p>
+                <button id="continueBirthdayGift">Mở lá thư dành cho em <span>→</span></button>
+              </div>
             </div>
           </article>
 
@@ -93,7 +109,6 @@
                 <p class="kicker ink">TRANG 03 · NỘI DUNG ĐƯỢC KHÓA</p>
                 <button class="locked-letter-card" id="memorySeal" aria-label="Chạm để mở khóa các trang tiếp theo">
                   <span class="locked-paper">
-                    <small>CHỈ DÀNH CHO EM</small>
                     <strong>Phần còn lại của tấm thiệp</strong>
                     <i data-card-date>30 · 07 · 2026</i>
                   </span>

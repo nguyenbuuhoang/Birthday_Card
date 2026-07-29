@@ -247,6 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let birthdayWritingStarted = false;
   let memoriesUnlocked = false;
   let candleBlown = false;
+  let birthdayGiftOpened = false;
   let counterInterval = null;
 
   dots.replaceChildren();
@@ -268,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#prevPage").disabled = currentPage === 0;
     $("#nextPage").disabled = currentPage === pages.length - 1 ||
       (currentPage === 2 && !memoriesUnlocked) ||
-      (currentPage === 0 && !candleBlown);
+      (currentPage === 0 && !birthdayGiftOpened);
     if (currentPage === 1 && !birthdayWritingStarted) {
       birthdayWritingStarted = true;
       requestAnimationFrame(startBirthdayWriting);
@@ -421,8 +422,22 @@ document.addEventListener("DOMContentLoaded", () => {
     turnCandleIntoStar();
 
     candleBlown = true;
-    $("#nextPage").disabled = false; // Kích hoạt nút đi tiếp
+    setTimeout(() => {
+      $("#openBirthdayGift").hidden = false;
+    }, 1100);
   });
+
+  $("#openBirthdayGift").addEventListener("click", () => {
+    if (birthdayGiftOpened) return;
+    birthdayGiftOpened = true;
+    const reveal = $("#birthdayGiftReveal");
+    reveal.hidden = false;
+    requestAnimationFrame(() => reveal.classList.add("show"));
+    $("#nextPage").disabled = false;
+    burst();
+  });
+
+  $("#continueBirthdayGift").addEventListener("click", () => showPage(1));
 
   function initAudioSilent() {
     try {
