@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "Dear My Love",
       "Mong những ngày sắp tới sẽ đối xử với em thật dịu dàng — cho em đủ niềm vui để mỉm cười, đủ bình yên để ngủ ngon và đủ dũng khí để theo đuổi những điều em mong muốn.",
       "Nếu có một ngày em thấy mệt, mong em nhớ rằng vẫn luôn có anh ở đây, sẵn sàng lắng nghe và cùng em đi qua những khoảng trời không nắng.",
-      "Cảm ơn em vì đã có mặt trên đời, và vì đã vô tình trở thành một phần rất đẹp trong những ngày của anh. Được gặp em là một điều mà anh luôn trân trọng.",
+      "Cảm ơn em vì đã đến với thế giới này, và vì đã trở thành một phần thật đẹp trong những ngày của anh. Được gặp em là một điều mà anh luôn trân trọng.",
       "Tuổi mới rồi, anh chỉ mong em sẽ luôn mỉm cười nhiều hơn hôm qua, hạnh phúc nhiều hơn hôm nay và bình yên trong tất cả những chặng đường phía trước.",
       "Happy Birthday, Vân Anh. ❤️"
     ],
@@ -414,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => p.remove(), 1300);
     }
 
-    $("#blowInstruction").innerHTML = "Điều ước sinh nhật đã được chấp nhận ♡";
+    $("#blowInstruction").innerHTML = "Điều ước của Vân Anh đã được gửi đến những vì sao ♡";
     $("#blowInstruction").classList.add("highlight-text");
     celebrateBirthdayWish();
     turnCandleIntoStar();
@@ -523,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#finishWriting").addEventListener("click", finishLetterWriting);
 
   // Bộ đếm ngày kỉ niệm
-  const startDate = new Date("2026-07-25T00:00:00+07:00");
+  const startDate = new Date("2026-06-10T00:00:00+07:00");
   function updateLoveCounter() {
     const now = new Date();
     const diff = now - startDate;
