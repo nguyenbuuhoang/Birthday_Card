@@ -187,8 +187,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardView = $("#cardView");
   let opening = false;
   let envelopeOpened = false;
+  let autoOpenTimer = null;
   function openCard() {
     if (opening || !envelopeOpened) return;
+    clearTimeout(autoOpenTimer);
+    autoOpenTimer = null;
     opening = true;
     intro.classList.add("is-opening");
     setTimeout(() => {
@@ -207,6 +210,8 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#openCard").setAttribute("aria-label", "Chạm lần nữa để mở tấm thiệp");
     $("#openCardLabel").innerHTML = "Chạm lần nữa để mở thiệp <span>→</span>";
     $("#openCardLabel").disabled = true;
+    clearTimeout(autoOpenTimer);
+    autoOpenTimer = setTimeout(openCard, 10000);
   }
   $("#openCard").addEventListener("click", () => {
     if (!envelopeOpened) {
@@ -219,6 +224,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!envelopeOpened) openEnvelope();
   });
   $("#closeCard").addEventListener("click", () => {
+    clearTimeout(autoOpenTimer);
+    autoOpenTimer = null;
     cardView.hidden = true;
     intro.hidden = false;
     intro.classList.remove("is-opening");
