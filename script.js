@@ -199,7 +199,10 @@ document.addEventListener("DOMContentLoaded", () => {
       cardView.hidden = false;
       opening = false;
       intro.classList.remove("is-opening");
-      $("#prevPage").focus();
+      document.body.classList.add("card-open");
+      if (window.matchMedia("(pointer: fine)").matches) {
+        $("#prevPage").focus({ preventScroll: true });
+      }
     }, 1900);
   }
   function openEnvelope() {
@@ -227,6 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clearTimeout(autoOpenTimer);
     autoOpenTimer = null;
     cardView.hidden = true;
+    document.body.classList.remove("card-open");
     intro.hidden = false;
     intro.classList.remove("is-opening");
     $(".envelope").classList.remove("open");
@@ -382,7 +386,8 @@ document.addEventListener("DOMContentLoaded", () => {
       character.classList.add("written");
       const areaBox = area.getBoundingClientRect();
       const charBox = character.getBoundingClientRect();
-      pen.style.left = `${charBox.right - areaBox.left}px`;
+      const penLeft = Math.max(8, Math.min(area.clientWidth - 28, charBox.right - areaBox.left));
+      pen.style.left = `${penLeft}px`;
       pen.style.top = `${charBox.bottom - areaBox.top}px`;
       if (charBox.bottom > areaBox.bottom - 28) {
         area.scrollTop += charBox.bottom - areaBox.bottom + 46;

@@ -34,6 +34,15 @@ body {
       #090508 100%);
 }
 
+body.card-open {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 button,
 input,
 textarea {
@@ -308,6 +317,11 @@ button:focus-visible,
 .envelope.open .envelope-flap {
   transform: rotateX(180deg);
   z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 1.05s cubic-bezier(0.25, 0.05, 0.2, 1),
+    opacity 0.18s ease 0.82s;
 }
 
 .envelope.open .wax-seal {
@@ -493,12 +507,17 @@ button:focus-visible,
 }
 
 .pages {
+  width: 100%;
   min-height: 0;
+  overflow: hidden;
   touch-action: pan-y;
 }
 
 .page {
+  width: 100%;
+  min-width: 0;
   height: 100%;
+  overflow: hidden;
   animation: pageIn 0.42s both;
 }
 
@@ -508,8 +527,12 @@ button:focus-visible,
 
 .paper {
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   height: 100%;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: clamp(32px, 5vw, 62px) clamp(28px, 7vw, 88px);
   color: var(--ink);
   scrollbar-width: thin;
@@ -1103,6 +1126,8 @@ button:focus-visible,
 /* Birthday note */
 .page-birthday-wish {
   display: flex;
+  width: 100%;
+  min-width: 0;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -1125,6 +1150,8 @@ button:focus-visible,
 .birthday-writing {
   position: relative;
   width: min(100%, 900px);
+  max-width: 100%;
+  min-width: 0;
   flex: 0 0 380px;
   height: 380px;
   overflow-x: hidden;
@@ -1142,11 +1169,18 @@ button:focus-visible,
 }
 
 .birthday-wish-copy {
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   font: 20px/1.55 var(--script);
   color: #4c3035;
 }
 
 .birthday-wish-copy p {
+  width: 100%;
+  max-width: 100%;
+  white-space: normal;
   margin-bottom: 7px;
   min-height: 1.45em;
 }
@@ -1162,7 +1196,7 @@ button:focus-visible,
 }
 
 .birthday-writing .ink-space {
-  white-space: pre;
+  white-space: normal;
 }
 
 .birthday-pen {
@@ -2116,6 +2150,14 @@ dialog::backdrop {
 }
 
 @media (max-width: 700px) {
+  html,
+  body,
+  body.card-open {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
   .scene {
     padding: 0;
   }
@@ -2239,8 +2281,8 @@ dialog::backdrop {
   }
 
   .birthday-wish-copy {
-    font-size: 15px;
-    line-height: 1.5;
+    font-size: clamp(17px, 4.5vw, 19px);
+    line-height: 1.55;
   }
 
   .birthday-promise {
@@ -2259,7 +2301,7 @@ dialog::backdrop {
   }
 
   .birthday-pen {
-    font-size: 21px;
+    font-size: 24px;
   }
 
   .locked-letter-card {
@@ -2393,12 +2435,13 @@ dialog::backdrop {
 
   .letter-peek {
     padding-top: 20px;
-    font-size: 21px;
+    font-size: 25px;
+    line-height: 1.05;
   }
 
   .letter-peek img {
-    width: 78px;
-    height: 78px;
+    width: 84px;
+    height: 84px;
   }
 
   .letter-peek .girl-feature {
@@ -2409,12 +2452,19 @@ dialog::backdrop {
   .girl-feature::before,
   .girl-feature::after {
     width: 46px;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.35px;
   }
 
   .letter-peek small {
-    font-size: 8px;
+    width: min(82%, 240px);
+    padding-top: 6px;
+    font-size: 9.5px;
+    line-height: 1.35;
+  }
+
+  .open-label {
+    font-size: 14px;
   }
 
   .page-birthday-wish {
