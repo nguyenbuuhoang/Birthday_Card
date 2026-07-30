@@ -2319,6 +2319,28 @@ dialog::backdrop {
 
   .birthday-pen {
     font-size: 24px;
+    transition:
+      left 0.055s linear,
+      top 0.055s linear;
+  }
+
+  .writing-pen {
+    transition:
+      left 0.055s linear,
+      top 0.055s linear,
+      opacity 0.2s ease;
+  }
+
+  .birthday-writing .ink-char,
+  .letter-copy .ink-char {
+    filter: none;
+  }
+
+  .birthday-writing .ink-char.written,
+  .letter-copy .ink-char.written {
+    opacity: 1;
+    filter: none;
+    animation: none;
   }
 
   .locked-letter-card {

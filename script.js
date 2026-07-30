@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
   // Chỉnh các nội dung cá nhân của thiệp tại đây.
   const CARD_CONTENT = {
@@ -388,18 +389,27 @@ document.addEventListener("DOMContentLoaded", () => {
         finishBirthdayWriting();
         return;
       }
-      const character = characters[index];
-      character.classList.add("written");
-      const areaBox = area.getBoundingClientRect();
-      const charBox = character.getBoundingClientRect();
-      const penLeft = Math.max(8, Math.min(area.clientWidth - 28, charBox.right - areaBox.left));
-      pen.style.left = `${penLeft}px`;
-      pen.style.top = `${charBox.bottom - areaBox.top}px`;
-      if (charBox.bottom > areaBox.bottom - 28) {
-        area.scrollTop += charBox.bottom - areaBox.bottom + 46;
+      const batchSize = 1;
+      let character = characters[index];
+      for (let count = 0; count < batchSize && index < characters.length; count += 1) {
+        character = characters[index];
+        character.classList.add("written");
+        index += 1;
       }
-      index += 1;
-      birthdayTimer = setTimeout(writeNext, /[.,!?—]/.test(character.textContent) ? 260 : character.textContent === " " ? 35 : 88);
+      if (!isTouchDevice || index % 2 === 0 || index >= characters.length) {
+        const areaBox = area.getBoundingClientRect();
+        const charBox = character.getBoundingClientRect();
+        const penLeft = Math.max(8, Math.min(area.clientWidth - 28, charBox.right - areaBox.left));
+        pen.style.left = `${penLeft}px`;
+        pen.style.top = `${charBox.bottom - areaBox.top}px`;
+        if (charBox.bottom > areaBox.bottom - 28) {
+          area.scrollTop += charBox.bottom - areaBox.bottom + 46;
+        }
+      }
+      const pause = isTouchDevice
+        ? (/[.,!?—]/.test(character.textContent) ? 230 : character.textContent === " " ? 40 : 72)
+        : (/[.,!?—]/.test(character.textContent) ? 260 : character.textContent === " " ? 35 : 88);
+      birthdayTimer = setTimeout(writeNext, pause);
     }
     requestAnimationFrame(writeNext);
   }
@@ -605,11 +615,19 @@ document.addEventListener("DOMContentLoaded", () => {
         finishLetterWriting();
         return;
       }
-      const character = characters[index];
-      character.classList.add("written");
-      movePenTo(character);
-      index += 1;
-      const pause = /[.,!?]/.test(character.textContent) ? 230 : character.textContent === " " ? 28 : 62;
+      const batchSize = 1;
+      let character = characters[index];
+      for (let count = 0; count < batchSize && index < characters.length; count += 1) {
+        character = characters[index];
+        character.classList.add("written");
+        index += 1;
+      }
+      if (!isTouchDevice || index % 2 === 0 || index >= characters.length) {
+        movePenTo(character);
+      }
+      const pause = isTouchDevice
+        ? (/[.,!?]/.test(character.textContent) ? 220 : character.textContent === " " ? 38 : 68)
+        : (/[.,!?]/.test(character.textContent) ? 230 : character.textContent === " " ? 28 : 62);
       writingTimer = setTimeout(writeNext, pause);
     }
     requestAnimationFrame(writeNext);
