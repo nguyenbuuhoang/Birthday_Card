@@ -171,11 +171,13 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     function animatePetals() {
-      pCtx.clearRect(0, 0, pWidth, pHeight);
-      petals.forEach(petal => {
-        petal.update();
-        petal.draw();
-      });
+      if (!document.body.classList.contains("card-transitioning")) {
+        pCtx.clearRect(0, 0, pWidth, pHeight);
+        petals.forEach(petal => {
+          petal.update();
+          petal.draw();
+        });
+      }
       requestAnimationFrame(animatePetals);
     }
     animatePetals();
@@ -193,17 +195,20 @@ document.addEventListener("DOMContentLoaded", () => {
     clearTimeout(autoOpenTimer);
     autoOpenTimer = null;
     opening = true;
+    document.body.classList.add("card-transitioning");
     intro.classList.add("is-opening");
+    const openDelay = window.matchMedia("(max-width: 700px)").matches ? 520 : 1050;
     setTimeout(() => {
       intro.hidden = true;
       cardView.hidden = false;
       opening = false;
       intro.classList.remove("is-opening");
+      document.body.classList.remove("card-transitioning");
       document.body.classList.add("card-open");
       if (window.matchMedia("(pointer: fine)").matches) {
         $("#prevPage").focus({ preventScroll: true });
       }
-    }, 1900);
+    }, openDelay);
   }
   function openEnvelope() {
     if (envelopeOpened || opening) return;
@@ -229,6 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#closeCard").addEventListener("click", () => {
     clearTimeout(autoOpenTimer);
     autoOpenTimer = null;
+    document.body.classList.remove("card-transitioning");
     cardView.hidden = true;
     document.body.classList.remove("card-open");
     intro.hidden = false;
