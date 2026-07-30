@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
     opening = true;
     document.body.classList.add("card-transitioning");
     intro.classList.add("is-opening");
-    const openDelay = window.matchMedia("(max-width: 700px)").matches ? 520 : 1050;
+    const openDelay = window.matchMedia("(max-width: 700px), (max-height: 500px)").matches ? 520 : 1050;
     setTimeout(() => {
       intro.hidden = true;
       cardView.hidden = false;
@@ -486,6 +486,7 @@ document.addEventListener("DOMContentLoaded", () => {
     star.style.setProperty("--fly-x-mid", `${flyX * 0.52}px`);
     star.style.setProperty("--fly-y-mid", `${flyY * 0.55 - 34}px`);
     page.appendChild(star);
+    setTimeout(() => star.remove(), 4500);
   }
 
   cake.addEventListener("click", () => {
