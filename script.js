@@ -18,9 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
       "Happy Birthday, Vân Anh. ❤️"
     ],
     letterParagraphs: [
-      "Từ lúc gặp em, những ngày bình thường của anh bỗng có thêm thật nhiều điều để mong chờ.",
-      "Anh thích cách em cười, cách em kể những câu chuyện không đầu không cuối, và cả cảm giác được là chính anh khi ở cạnh em.",
-      "Cảm ơn em vì đã xuất hiện, theo một cách thật dịu dàng."
+      "10.06.2026 không chỉ là một chiếc mật mã.",
+      "Đó là ngày anh lần đầu gửi đến em những lời yêu thương mà anh đã giữ trong lòng. Là ngày anh đủ can đảm để nói rằng anh thích em, thích nụ cười của em, thích cách em xuất hiện và khiến những ngày bình thường của anh trở nên đặc biệt hơn.",
+      "Anh chọn ngày ấy làm chìa khóa vì đó là một dấu mốc rất đẹp với anh — khoảnh khắc tình cảm này không còn chỉ là điều anh âm thầm cất giữ, mà đã thật sự được gửi đến em.",
+      "Và nếu em đang đọc được bức thư này, anh chỉ muốn nói thêm một lần nữa:",
+      "Anh thích em. Thật lòng và rất nhiều. ♡"
     ]
   };
 
