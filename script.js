@@ -252,6 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentPage = 0;
   let writingStarted = false;
   let birthdayWritingStarted = false;
+  let birthdayLetterOpened = false;
   let memoriesUnlocked = false;
   let candleBlown = false;
   let birthdayGiftOpened = false;
@@ -267,7 +268,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   function showPage(index) {
     const requestedPage = Math.max(0, Math.min(pages.length - 1, index));
-    currentPage = !memoriesUnlocked && requestedPage > 2 ? 2 : requestedPage;
+    currentPage = !birthdayGiftOpened && requestedPage > 0
+      ? 0
+      : !memoriesUnlocked && requestedPage > 2
+        ? 2
+        : requestedPage;
     pages.forEach((page, i) => {
       page.hidden = i !== currentPage;
       page.classList.toggle("active", i === currentPage);
@@ -279,7 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
       (currentPage === 0 && !birthdayGiftOpened);
     if (currentPage === 1 && !birthdayWritingStarted) {
       birthdayWritingStarted = true;
-      requestAnimationFrame(startBirthdayWriting);
+      openBirthdayLetter();
     }
     if (currentPage === 3 && !writingStarted) {
       writingStarted = true;
@@ -295,11 +300,44 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   $("#prevPage").addEventListener("click", () => showPage(currentPage - 1));
   $("#nextPage").addEventListener("click", () => showPage(currentPage + 1));
+
+  let swipeStartX = 0;
+  let swipeStartY = 0;
+  let swipeTracking = false;
+  const pagesArea = $("#pages");
+  pagesArea.addEventListener("pointerdown", event => {
+    if (event.pointerType === "mouse" || event.target.closest("button, input, textarea, dialog")) return;
+    swipeStartX = event.clientX;
+    swipeStartY = event.clientY;
+    swipeTracking = true;
+  }, { passive: true });
+  pagesArea.addEventListener("pointerup", event => {
+    if (!swipeTracking) return;
+    swipeTracking = false;
+    const deltaX = event.clientX - swipeStartX;
+    const deltaY = event.clientY - swipeStartY;
+    if (Math.abs(deltaX) < 58 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
+    showPage(currentPage + (deltaX < 0 ? 1 : -1));
+  }, { passive: true });
+  pagesArea.addEventListener("pointercancel", () => {
+    swipeTracking = false;
+  }, { passive: true });
+
   document.addEventListener("keydown", event => {
     if (cardView.hidden) return;
+    if (event.target.matches("input, textarea")) return;
+    if (event.key === "Escape") {
+      const openPhotoDialog = $("#birthdayPhotoDialog[open]");
+      if (openPhotoDialog) {
+        event.preventDefault();
+        openPhotoDialog.close();
+        return;
+      }
+      $("#closeCard").click();
+      return;
+    }
     if (event.key === "ArrowLeft") showPage(currentPage - 1);
     if (event.key === "ArrowRight") showPage(currentPage + 1);
-    if (event.key === "Escape") $("#closeCard").click();
   });
   showPage(0);
 
@@ -354,6 +392,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     requestAnimationFrame(writeNext);
   }
+
+  function openBirthdayLetter() {
+    if (birthdayLetterOpened) {
+      startBirthdayWriting();
+      return;
+    }
+    birthdayLetterOpened = true;
+    const fold = $("#birthdayLetterFold");
+    $("#nextPage").disabled = true;
+    fold.hidden = false;
+    if (playing) {
+      bgMusic.volume = 0.28;
+      try {
+        playFlipSound();
+      } catch (error) {
+        // Âm thanh phụ không được phép làm gián đoạn hiệu ứng mở thư.
+      }
+    }
+    void fold.offsetWidth;
+    fold.classList.add("opening");
+    setTimeout(() => {
+      fold.hidden = true;
+      fold.classList.remove("opening");
+      bgMusic.volume = 0.75;
+      $("#nextPage").disabled = false;
+      startBirthdayWriting();
+    }, 1250);
+  }
+
   $("#finishBirthdayWriting").addEventListener("click", finishBirthdayWriting);
   prepareBirthdayWriting();
 
@@ -445,6 +512,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   $("#continueBirthdayGift").addEventListener("click", () => showPage(1));
+
+  const birthdayPhotoDialog = $("#birthdayPhotoDialog");
+  $("#openBirthdayPhoto").addEventListener("click", () => {
+    birthdayPhotoDialog.showModal();
+    burst();
+  });
+  $("#closeBirthdayPhoto").addEventListener("click", () => birthdayPhotoDialog.close());
+  birthdayPhotoDialog.addEventListener("click", event => {
+    if (event.target === birthdayPhotoDialog) birthdayPhotoDialog.close();
+  });
 
   function initAudioSilent() {
     try {

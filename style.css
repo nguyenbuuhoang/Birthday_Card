@@ -494,6 +494,7 @@ button:focus-visible,
 
 .pages {
   min-height: 0;
+  touch-action: pan-y;
 }
 
 .page {
@@ -725,6 +726,35 @@ button:focus-visible,
   background: #f2e8d8;
 }
 
+.photo-zoom-button {
+  position: relative;
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
+
+.photo-zoom-button > span {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(65, 44, 49, 0.72);
+  color: #fffaf1;
+  font-size: 14px;
+  opacity: 0;
+  transition: 0.25s;
+}
+
+.photo-zoom-button:hover > span,
+.photo-zoom-button:focus-visible > span {
+  opacity: 1;
+}
+
 .birthday-photo figcaption {
   padding-top: 8px;
   color: var(--wine);
@@ -766,6 +796,158 @@ button:focus-visible,
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+.birthday-photo-dialog {
+  width: min(94vw, 900px);
+  height: min(92svh, 920px);
+  max-width: none;
+  max-height: none;
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.birthday-photo-dialog::backdrop {
+  background: rgba(10, 4, 9, 0.88);
+  backdrop-filter: blur(16px);
+}
+
+.birthday-photo-dialog[open] {
+  display: grid;
+  place-items: center;
+  animation: fade 0.35s both;
+}
+
+.photo-dialog-frame {
+  max-width: 100%;
+  max-height: 100%;
+  padding: 10px 10px 28px;
+  background: #fffaf1;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+  transform: rotate(-0.7deg);
+  animation: photoZoomIn 0.55s cubic-bezier(0.2, 0.72, 0.2, 1) both;
+}
+
+.photo-dialog-frame img {
+  display: block;
+  max-width: min(88vw, 820px);
+  max-height: calc(92svh - 70px);
+  object-fit: contain;
+}
+
+.photo-dialog-frame p {
+  margin-top: 8px;
+  color: var(--wine);
+  text-align: center;
+  font: 24px/1 var(--script);
+}
+
+.photo-dialog-close {
+  position: fixed;
+  z-index: 2;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  background: rgba(25, 10, 20, 0.68);
+  color: #fff;
+  font-size: 28px;
+}
+
+@keyframes photoZoomIn {
+  from {
+    opacity: 0;
+    transform: rotate(-2deg) scale(0.82);
+  }
+}
+
+.birthday-letter-fold {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  overflow: hidden;
+  background: #ead8c0;
+  perspective: 1200px;
+}
+
+.birthday-letter-fold[hidden] {
+  display: none;
+}
+
+.fold-paper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 51%;
+  background:
+    linear-gradient(rgba(133, 57, 78, 0.06) 1px, transparent 1px) 0 50% / 100% 48px,
+    linear-gradient(135deg, #fffaf1, #ead8c0);
+  box-shadow: inset 0 0 50px rgba(106, 65, 55, 0.08);
+}
+
+.fold-left {
+  left: 0;
+  transform-origin: left center;
+}
+
+.fold-right {
+  right: 0;
+  transform-origin: right center;
+}
+
+.fold-seal {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  width: 62px;
+  height: 62px;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  border: 4px double rgba(255, 255, 255, 0.32);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 25%, #d96070, #8d263d 72%);
+  color: #fff1e8;
+  font: 19px var(--serif);
+  box-shadow: 0 10px 24px rgba(76, 30, 43, 0.3);
+}
+
+.birthday-letter-fold.opening .fold-left {
+  animation: unfoldLeft 1.15s cubic-bezier(0.45, 0, 0.2, 1) forwards;
+}
+
+.birthday-letter-fold.opening .fold-right {
+  animation: unfoldRight 1.15s cubic-bezier(0.45, 0, 0.2, 1) forwards;
+}
+
+.birthday-letter-fold.opening .fold-seal {
+  animation: sealOpen 0.48s ease forwards;
+}
+
+@keyframes unfoldLeft {
+  to {
+    transform: rotateY(-105deg);
+    opacity: 0;
+  }
+}
+
+@keyframes unfoldRight {
+  to {
+    transform: rotateY(105deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sealOpen {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.45) rotate(12deg);
   }
 }
 
@@ -2013,6 +2195,24 @@ dialog::backdrop {
 
   .birthday-photo img {
     height: min(44svh, 360px);
+  }
+
+  .photo-zoom-button > span {
+    opacity: 1;
+  }
+
+  .birthday-photo-dialog {
+    width: 100vw;
+    height: 100svh;
+  }
+
+  .photo-dialog-frame {
+    max-width: calc(100vw - 24px);
+  }
+
+  .photo-dialog-frame img {
+    max-width: calc(100vw - 44px);
+    max-height: calc(100svh - 90px);
   }
 
   .birthday-photo-message {

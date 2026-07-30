@@ -71,7 +71,11 @@
                 <span class="gift-glow" aria-hidden="true"></span>
                 <p class="kicker ink">MÓN QUÀ NHỎ DÀNH CHO EM</p>
                 <figure class="birthday-photo">
-                  <img src="assets/HappyBirthday.jpg" alt="Vân Anh và người yêu bên chiếc bánh sinh nhật">
+                  <button class="photo-zoom-button" id="openBirthdayPhoto"
+                    aria-label="Xem ảnh sinh nhật toàn màn hình">
+                    <img src="assets/HappyBirthday.jpg" alt="Vân Anh và người yêu bên chiếc bánh sinh nhật">
+                    <span aria-hidden="true">↗</span>
+                  </button>
                   <figcaption>30 · 07 · 2026</figcaption>
                 </figure>
                 <p class="birthday-photo-message">
@@ -85,6 +89,11 @@
 
           <article class="page" data-page="1" hidden>
             <div class="paper page-birthday-wish">
+              <div class="birthday-letter-fold" id="birthdayLetterFold" hidden aria-hidden="true">
+                <span class="fold-paper fold-left"></span>
+                <span class="fold-paper fold-right"></span>
+                <span class="fold-seal">V.A</span>
+              </div>
               <span class="wish-flower wish-flower-left">❀</span>
               <span class="wish-flower wish-flower-right">❀</span>
               <div class="birthday-writing">
@@ -276,6 +285,14 @@
       <p>Cảm ơn em đã bước vào cuộc đời anh.<br>Anh sẽ trân trọng điều này thật nhiều.</p>
       <span class="date-pill" data-card-date>30 · 07 · 2026</span>
       <button id="closeSuccess">Đọc lại tấm thiệp</button>
+    </div>
+  </dialog>
+
+  <dialog class="birthday-photo-dialog" id="birthdayPhotoDialog" aria-label="Ảnh sinh nhật của Vân Anh">
+    <button class="photo-dialog-close" id="closeBirthdayPhoto" aria-label="Đóng ảnh">×</button>
+    <div class="photo-dialog-frame">
+      <img src="assets/HappyBirthday.jpg" alt="Vân Anh và người yêu bên chiếc bánh sinh nhật">
+      <p>30 · 07 · 2026</p>
     </div>
   </dialog>
 
